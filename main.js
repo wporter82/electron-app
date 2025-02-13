@@ -1,10 +1,21 @@
 const { app, BrowserWindow, ipcMain } = require('electron/main');
 const path = require('node:path');
 
+const titleBarOverlayProps = {
+    color: '#222',
+    symbolColor: '#fff',
+    height: 30
+};
+
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
+        resizable: false,
+        maximizable: false,
+        fullscreenable: false,
+        titleBarStyle: 'hidden',
+        ...(process.platform !== 'darwin' ? { titleBarOverlay: titleBarOverlayProps } : {}),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
